@@ -1,0 +1,29 @@
+{
+  "name": "cloudacademy_personal_budget",
+  "version": "1.0.0",
+  "description": "Code Academy",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheCloudGuyOrg/cloudacademy_personal_budget.git"
+  },
+  "keywords": [
+    "codeacademy",
+    "javascript",
+    "budget"
+  ],
+  "author": "Derek R. Cox",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TheCloudGuyOrg/cloudacademy_personal_budget/issues"
+  },
+  "homepage": "https://github.com/TheCloudGuyOrg/cloudacademy_personal_budget#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "pg": "^8.9.0"
+  }
+}
