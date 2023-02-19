@@ -1,6 +1,6 @@
 const express = require('express');
 const envelopesRouter = express.Router();
-const dbEnvelopes = require("./db");
+const dbEnvelopes = require('./db.js');
 const {createId, findById, deleteById} = require('./functions.js');
 module.exports = envelopesRouter;
 

@@ -1,13 +1,26 @@
 const express = require('express');
 const app = express();
-module.exports = app;
-
-//Set Port to 3000
+const bodyParser = require('body-parser')
+const query = require('./database/dbqueries.js')
 const PORT = process.env.PORT || 3000;
 
+app.use(bodyParser.json())
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+)
+
+//Validate Connection
+app.get('/', (request, response) => {
+  response.json({ info: 'Node.js, Express, and Postgres API' })
+})
+
+
 //Envelope Router
-const envelopesRouter = require('./server/envelopes.js');
-app.use('/envelopes', envelopesRouter);
+app.get('/envelopes', query.getEnvelopes);
+app.get('/envelopes/:id', query.getEnvelopesById)
+
 
 //Start App 
 app.listen(PORT, () => {
