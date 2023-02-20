@@ -1,8 +1,9 @@
+//Use Express
 const express = require('express');
 const app = express();
+
+//Body Parser
 const bodyParser = require('body-parser')
-const query = require('./database/dbqueries.js')
-const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json())
 app.use(
@@ -16,11 +17,12 @@ app.get('/', (request, response) => {
   response.json({ info: 'Node.js, Express, and Postgres API' })
 })
 
-
 //Envelope Router
-app.get('/envelopes', query.getEnvelopes);
-app.get('/envelopes/:id', query.getEnvelopesById)
+const envelopesRouter = require("./routes/envelopeRoutes.js");
+app.use("/envelopes", envelopesRouter);
 
+//Define Port
+const PORT = process.env.PORT || 3000;
 
 //Start App 
 app.listen(PORT, () => {
