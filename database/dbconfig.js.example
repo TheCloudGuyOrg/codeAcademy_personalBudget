@@ -2,7 +2,7 @@ const DB_USER = 'name';
 const DB_PASSWORD = 'password';
 const PORT = 5432;
 const DB_HOST = 'localhost'; 
-const DB_DATABASE = 'envelopes';
+const DB_DATABASE = 'database';
 
 module.exports = {
     DB_USER,
