@@ -1,12 +1,22 @@
+//Use Express
 const express = require("express");
-const router = express.Router();
+const api = express.Router();
 
+//Import Queries
 const {
     getEnvelopes,
     getEnvelopesById,
-  } = require('../database/envelopeQueries.js');
+    addEnvelope,
+    updateEnvelope,
+    deleteEnvelope
+} = require('../database/envelopeQueries.js');
 
-router.get('/', getEnvelopes);
-router.get('/:id', getEnvelopesById);
+//API Routes
+api.get('/', getEnvelopes);
+api.get('/:id', getEnvelopesById);
+api.post("/", addEnvelope);
+api.put("/:id", updateEnvelope);
+api.delete("/:id", deleteEnvelope);
 
-module.exports = router;
+//Export API
+module.exports = api;

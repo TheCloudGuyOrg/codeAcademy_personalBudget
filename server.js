@@ -18,8 +18,8 @@ app.get('/', (request, response) => {
 })
 
 //Envelope Router
-const envelopesRouter = require("./api/envelopeApi.js");
-app.use("/api/v1/envelopes", envelopesRouter);
+const envelopesAPI = require("./api/envelopeApi.js");
+app.use("/api/v1/envelopes", envelopesAPI);
 
 //Define Port
 const PORT = process.env.PORT || 3000;
@@ -27,4 +27,4 @@ const PORT = process.env.PORT || 3000;
 //Start App 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`); 
-})
+});
