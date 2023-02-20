@@ -19,7 +19,7 @@ app.get('/', (request, response) => {
 
 //Envelope Router
 const envelopesRouter = require("./routes/envelopeRoutes.js");
-app.use("/envelopes", envelopesRouter);
+app.use("/api/v1/envelopes", envelopesRouter);
 
 //Define Port
 const PORT = process.env.PORT || 3000;
