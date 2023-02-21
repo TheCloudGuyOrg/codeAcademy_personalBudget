@@ -24,7 +24,7 @@ const getEnvelopesById = (request, response) => {
 
 //Add Envelopes Query
 const addEnvelope = (request, response) => {
-
+  
 };
 
 //Update Envelopes Query
@@ -34,7 +34,13 @@ const updateEnvelope = (request, response) => {
 
 //Delete Envelopes Query
 const deleteEnvelope = (request, response) => {
-
+  const id = parseInt(request.params.id)
+  db.query('DELETE FROM envelopes WHERE id = $1', [id], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).send(`Envelope deleted with ID: ${id}`)
+  })
 };
  
 //Export Queries
