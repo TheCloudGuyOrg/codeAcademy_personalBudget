@@ -29,7 +29,18 @@ const addEnvelope = (request, response) => {
 
 //Update Envelopes Query
 const updateEnvelope = (request, response) => {
-
+  const id = parseInt(request.params.id)
+  const { title, budget } = request.query
+db.query(
+    'UPDATE envelopes SET title = $1, budget = $2 WHERE id = $3',
+    [title, budget, id],
+    (error, results) => {
+      if (error) {
+        throw error
+      }
+      response.status(200).send(`User modified with ID: ${id}`)
+    }
+  )
 };
 
 //Delete Envelopes Query
