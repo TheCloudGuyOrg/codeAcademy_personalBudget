@@ -24,7 +24,15 @@ const getEnvelopesById = (request, response) => {
 
 //Add Envelopes Query
 const addEnvelope = (request, response) => {
-  
+  const { id, title, budget } = request.query
+  db.query('INSERT INTO envelopes (id, title, budget) VALUES ($1, $2, $3) RETURNING *', 
+  [id, title, budget], 
+  (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(201).send(`User added with ID: ${results.rows[0].id}`)
+  })
 };
 
 //Update Envelopes Query
