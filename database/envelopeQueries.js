@@ -61,6 +61,18 @@ const deleteEnvelope = (request, response) => {
     response.status(200).send(`Envelope deleted with ID: ${id}`)
   })
 };
+
+//Add Envelope Transaction Query
+addEnvelopeTransaction = async (request, response) => {
+  // @desc		Add a Transaction
+  // @route		DELETE /api/v1/envelopes/:id/transactions
+};
+
+//Get Envelope Transaction Query
+getEnvelopeTransactions = async (request, response) => {
+  // @desc		Get Envelope transactions
+  // @route		GET /api/v1/envelope/:id/transactions
+};
  
 //Export Queries
 module.exports = {
@@ -68,7 +80,12 @@ module.exports = {
   getEnvelopesById,
   addEnvelope,
   updateEnvelope,
-  deleteEnvelope
+  deleteEnvelope,
+  addEnvelopeTransaction,
+  getEnvelopeTransactions
 }
 
- 
+// Add Try/Catch Error Handling
+// Add Async/Await
+// Add Error Status
+// Add Envelope Transactions 

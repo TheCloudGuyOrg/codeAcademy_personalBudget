@@ -8,7 +8,9 @@ const {
     getEnvelopesById,
     addEnvelope,
     updateEnvelope,
-    deleteEnvelope
+    deleteEnvelope,
+    addEnvelopeTransaction,
+    getEnvelopeTransactions
 } = require('../database/envelopeQueries.js');
 
 //API Routes
@@ -17,6 +19,8 @@ api.get('/:id', getEnvelopesById);
 api.post("/", addEnvelope);
 api.put("/:id", updateEnvelope);
 api.delete("/:id", deleteEnvelope);
+api.get('/:id/transactions', getEnvelopeTransactions);
+api.post('/:id/transactions', addEnvelopeTransaction);
 
 //Export API
 module.exports = api;

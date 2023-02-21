@@ -1,3 +1,24 @@
-//Update your database to add a transactions feature to your project.
+//Use Express
+const express = require("express");
+const api = express.Router();
 
-//Transactions should include a date, payment amount, payment recipient, and designated envelope from which to remove funds
+//Import Queries
+const {
+	getTransactions,
+	getTransactionById,
+	deleteTransaction,
+	updateTransaction
+} = require('../database/transactionQueries.js');
+
+//API Routes
+api.get('/', getTransactions);
+api.get('/:id', getTransactionById);
+api.delete('/:id', deleteTransaction);
+api.put('/:id', updateTransaction);
+
+//Export API
+module.exports = api;
+
+
+
+

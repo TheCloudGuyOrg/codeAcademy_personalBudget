@@ -21,6 +21,10 @@ app.get('/', (request, response) => {
 const envelopesAPI = require("./api/envelopeApi.js");
 app.use("/api/v1/envelopes", envelopesAPI);
 
+//Transaction Router
+const transactionsRouter = require("./api/transactionApi.js");
+app.use("/api/v1/transactions", transactionsRouter);
+
 //Define Port
 const PORT = process.env.PORT || 3000;
 
