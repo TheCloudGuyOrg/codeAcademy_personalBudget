@@ -22,7 +22,7 @@ const getEnvelopesById = (request, response) => {
   })
 };
 
-//Add Envelopes Query
+//Add Envelopes Query **Remove id and automate it 
 const addEnvelope = (request, response) => {
   const { id, title, budget } = request.query
   db.query('INSERT INTO envelopes (id, title, budget) VALUES ($1, $2, $3) RETURNING *', 
