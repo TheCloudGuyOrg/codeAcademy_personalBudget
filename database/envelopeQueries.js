@@ -85,6 +85,7 @@ module.exports = {
   getEnvelopeTransactions
 }
 
+// Fix needing to Submit id on add Envelope
 // Add Try/Catch Error Handling
 // Add Async/Await
 // Add Error Status

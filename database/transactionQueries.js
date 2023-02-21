@@ -32,7 +32,6 @@ module.exports = {
     updateTransaction,
     deleteTransaction
   }
-  
 
 //Update your database to add a transactions feature to your project.
 
