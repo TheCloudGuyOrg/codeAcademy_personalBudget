@@ -9,7 +9,11 @@ const getEnvelopes = (request, response) => {
       if (error) {
         throw error
       }
-      response.status(200).json(results.rows)
+      response.status(200).send({
+        status: 'Success',
+        message: 'Envelopes Information retrieved',
+        data: results.rows,
+        });
     })
   }
   catch (error) {
@@ -28,7 +32,11 @@ const getEnvelopesById = (request, response) => {
       if (error) {
         throw error
       }
-      response.status(200).json(results.rows)
+      response.status(200).status(200).send({
+        status: 'Success',
+        message: 'Envelope Information retrieved',
+        data: results.rows[0],
+        });
     })
   }
   catch (error) {
@@ -47,7 +55,11 @@ const addEnvelope = (request, response) => {
       if (error) {
         throw error
       }
-      response.status(201).send(`User added with ID: ${results.rows[0].id}`)
+      response.status(201).send({
+        status: 'Success',
+        message: 'New envelope created',
+        data: results.rows[0],
+        });
     })
   }
   catch (error) {
@@ -68,7 +80,11 @@ const updateEnvelope = (request, response) => {
         if (error) {
           throw error
         }
-        response.status(200).send(`User modified with ID: ${id}`)
+        response.status(200).send({
+          status: 'Success',
+          message: `Envelope with ID ${id} updated`,
+          data: results.rows[0],
+          });
       })
   }
   catch (error) {
@@ -87,7 +103,11 @@ const deleteEnvelope = (request, response) => {
       if (error) {
         throw error
       }
-      response.status(200).send(`Envelope deleted with ID: ${id}`)
+      response.status(200).send({
+        status: 'Success',
+        message: `Envelope deleted with ID: ${id}`,
+        data: results.rows[0],
+      })
     })
   }
   catch (error) {
@@ -96,7 +116,6 @@ const deleteEnvelope = (request, response) => {
 		})
   }
 };
-
 
 
 //Add Envelope Transaction Query
