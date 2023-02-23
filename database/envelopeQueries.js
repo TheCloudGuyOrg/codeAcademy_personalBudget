@@ -10,12 +10,13 @@ const getEnvelopes = (request, response) => {
         return response.status(404).send({
           message: "Records not found"
         })
-      }
+      } else {
       response.status(200).send({
         status: 'Success',
         message: 'Envelopes Information retrieved',
         data: results.rows,
         })
+      }
     })
   }
   catch (error) {
@@ -36,12 +37,13 @@ const getEnvelopesById = (request, response) => {
           status: 'Failure',
           message: "No envelope information found",
           })
-      }
+      } else {
       response.status(200).send({
         status: 'Success',
         message: 'Envelope Information retrieved',
         data: results.rows[0],
         });
+      }
     })
   }
   catch (error) {
@@ -62,12 +64,13 @@ const addEnvelope = (request, response) => {
           status: 'Failure',
           message: "Could not add envelope",
           })
-      }
+      } else {
       response.status(201).send({
         status: 'Success',
         message: 'New envelope created',
         data: results.rows[0],
-        });
+        })
+      }
     })
   }
   catch (error) {
@@ -89,12 +92,13 @@ const updateEnvelope = (request, response) => {
           status: 'Failure',
           message: `Could not update envelope with ID ${id}`,
           })
-        }
+        } else {
         response.status(200).send({
           status: 'Success',
           message: `Envelope with ID ${id} updated`,
           data: results.rows[0],
           });
+        }
       })
   }
   catch (error) {
@@ -115,12 +119,13 @@ const deleteEnvelope = (request, response) => {
           status: 'Failure',
           message: "Record not found",
         })
-      }
+      } else {
       response.status(200).send({
         status: 'Success',
         message: `Envelope deleted with ID: ${id}`,
         data: results.rows[0],
-      })
+        })
+      }
     })
   }
   catch (error) {
