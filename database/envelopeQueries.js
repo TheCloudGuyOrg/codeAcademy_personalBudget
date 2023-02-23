@@ -97,7 +97,7 @@ const updateEnvelope = (request, response) => {
           status: 'Success',
           message: `Envelope with ID ${id} updated`,
           data: results.rows[0],
-          });
+          })
         }
       })
   }

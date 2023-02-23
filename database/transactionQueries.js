@@ -5,7 +5,7 @@ const db = require('./dbconnection.js');
 getTransactions = async (req, res) => {
     // @desc		Get all Transactions
     // @route		GET /api/v1/transactions
-}
+};
 
 
 getTransactionById = async (req, res) => {
@@ -31,8 +31,4 @@ module.exports = {
     getTransactionById,
     updateTransaction,
     deleteTransaction
-  }
-
-//Update your database to add a transactions feature to your project.
-
-//Transactions should include a date, payment amount, payment recipient, and designated envelope from which to remove funds
+  };
