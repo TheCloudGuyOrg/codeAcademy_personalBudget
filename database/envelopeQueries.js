@@ -6,14 +6,16 @@ const getEnvelopes = (request, response) => {
   const query = 'SELECT * FROM envelopes ORDER BY id ASC'
   try {
     db.query(query, (error, results) => {
-      if (error) {
-        throw error
+      if (results.rowCount < 1) {
+        return response.status(404).send({
+          message: "Records not found"
+        })
       }
       response.status(200).send({
         status: 'Success',
         message: 'Envelopes Information retrieved',
         data: results.rows,
-        });
+        })
     })
   }
   catch (error) {
@@ -29,10 +31,13 @@ const getEnvelopesById = (request, response) => {
   const query = 'SELECT * FROM envelopes WHERE id = $1'
   try {  
     db.query(query, [id], (error, results) => {
-      if (error) {
-        throw error
+      if (results.rowCount < 1) {
+        return response.status(404).send({
+          status: 'Failure',
+          message: "No envelope information found",
+          })
       }
-      response.status(200).status(200).send({
+      response.status(200).send({
         status: 'Success',
         message: 'Envelope Information retrieved',
         data: results.rows[0],
@@ -53,7 +58,10 @@ const addEnvelope = (request, response) => {
   try {
     db.query(query, [id, title, budget], (error, results) => {
       if (error) {
-        throw error
+        return response.status(404).send({
+          status: 'Failure',
+          message: "Could not add envelope",
+          })
       }
       response.status(201).send({
         status: 'Success',
@@ -69,7 +77,6 @@ const addEnvelope = (request, response) => {
   }
 };
 
-
 //Update Envelopes Query
 const updateEnvelope = (request, response) => {
   const id = parseInt(request.params.id)
@@ -77,8 +84,11 @@ const updateEnvelope = (request, response) => {
   const query = 'UPDATE envelopes SET title = $1, budget = $2 WHERE id = $3'
   try {
     db.query(query, [title, budget, id], (error, results) => {
-        if (error) {
-          throw error
+      if (results.rowCount < 1) {
+        return response.status(404).send({
+          status: 'Failure',
+          message: `Could not update envelope with ID ${id}`,
+          })
         }
         response.status(200).send({
           status: 'Success',
@@ -100,8 +110,11 @@ const deleteEnvelope = (request, response) => {
   const query = 'DELETE FROM envelopes WHERE id = $1'
   try {
     db.query(query, [id], (error, results) => {
-      if (error) {
-        throw error
+      if (results.rowCount < 1) {
+        return response.status(404).send({
+          status: 'Failure',
+          message: "Record not found",
+        })
       }
       response.status(200).send({
         status: 'Success',
@@ -145,5 +158,4 @@ module.exports = {
 // Fix needing to Submit id on add Envelope
 // Fix null value for update envelope
 // Add Async/Await
-// Add Error Status
 // Add Envelope Transactions
