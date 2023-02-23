@@ -3,7 +3,6 @@ const {DB_USER, PORT, DB_HOST, DB_DATABASE} = require('./dbconfig');
 const connectionString = `postgresql://${DB_USER}@${DB_HOST}:${PORT}/${DB_DATABASE}`;
 const pool = new Pool ({connectionString});
 
-
 module.exports = {
   query: (text, params, callback) => {
     const start = Date.now()
@@ -44,4 +43,3 @@ module.exports = {
     })
   },
 };
-
