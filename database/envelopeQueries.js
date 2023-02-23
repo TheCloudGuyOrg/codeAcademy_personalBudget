@@ -60,7 +60,7 @@ const addEnvelope = async (request, response) => {
   try {
     await db.query(query, [id, title, budget], (error, results) => {
       if (error) {
-        return response.status(404).send({
+        return response.status(400).send({
           status: 'Failure',
           message: "Could not add envelope",
           })
@@ -88,7 +88,7 @@ const updateEnvelope = async (request, response) => {
   try {
     await db.query(query, [title, budget, id], (error, results) => {
       if (results.rowCount < 1) {
-        return response.status(404).send({
+        return response.status(400).send({
           status: 'Failure',
           message: `Could not update envelope with ID ${id}`,
           })
@@ -115,12 +115,12 @@ const deleteEnvelope = async (request, response) => {
   try {
     await db.query(query, [id], (error, results) => {
       if (results.rowCount < 1) {
-        return response.status(404).send({
+        return response.status(400).send({
           status: 'Failure',
           message: "Record not found",
         })
       } else {
-      response.status(200).send({
+      response.status(204).send({
         status: 'Success',
         message: `Envelope deleted with ID: ${id}`,
         data: results.rows[0],
@@ -137,13 +137,13 @@ const deleteEnvelope = async (request, response) => {
 
 
 //Add Envelope Transaction Query
-addEnvelopeTransaction = (request, response) => {
+addEnvelopeTransaction = async (request, response) => {
   // @desc		Add a Transaction
   // @route		DELETE /api/v1/envelopes/:id/transactions
 };
 
 //Get Envelope Transaction Query
-getEnvelopeTransactions = (request, response) => {
+getEnvelopeTransactions = async (request, response) => {
   // @desc		Get Envelope transactions
   // @route		GET /api/v1/envelope/:id/transactions
 };
