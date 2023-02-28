@@ -1,12 +1,31 @@
 //Database Connection
 const db = require('./dbconnection.js');
 
-    // @desc		Get all Transactions
-    // @route		GET /api/v1/transactions
+//Get Transactions Query
 getTransactions = async (request, response) => {
 
   try {
-
+    const query = 'SELECT * FROM transactions ORDER BY id ASC'
+    try {
+      await db.query(query, (error, results) => {
+        if (results.rowCount < 1) {
+          return response.status(404).send({
+            message: "Records not found"
+          })
+        } else {
+        response.status(200).send({
+          status: 'Success',
+          message: 'Transaction Information retrieved',
+          data: results.rows,
+          })
+        }
+      })
+    }
+    catch (error) {
+      return response.status(500).send({
+              error: error.message
+          })
+    }
   }
   catch (error) {
     return response.status(500).send({
@@ -15,18 +34,31 @@ getTransactions = async (request, response) => {
   }
 };
 
-    // @desc		Get a Transaction
-    // @route		GET /api/v1/transactions/:id
+//Get Transaction by ID
 getTransactionById = async (request, response) => {
-
-  try {
-
-  }
-  catch (error) {
-    return response.status(500).send({
-		error: error.message
-	})
-  }
+    const id = parseInt(request.params.id)
+    const query = 'SELECT * FROM transactions WHERE id = $1'
+    try {  
+      await db.query(query, [id], (error, results) => {
+        if (results.rowCount < 1) {
+          return response.status(404).send({
+            status: 'Failure',
+            message: "No envelope information found",
+            })
+        } else {
+        response.status(200).send({
+          status: 'Success',
+          message: 'Transaction Information retrieved',
+          data: results.rows[0],
+          })
+        }
+      })
+    }
+    catch (error) {
+      return response.status(500).send({
+              error: error.message
+        })
+    }
 };
 
 	// @desc		Update a transaction
