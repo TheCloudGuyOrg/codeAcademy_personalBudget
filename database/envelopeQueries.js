@@ -42,7 +42,7 @@ const getEnvelopesById = async (request, response) => {
         status: 'Success',
         message: 'Envelope Information retrieved',
         data: results.rows[0],
-        });
+        })
       }
     })
   }
@@ -135,17 +135,54 @@ const deleteEnvelope = async (request, response) => {
   }
 };
 
-
 //Add Envelope Transaction Query
-addEnvelopeTransaction = async (request, response) => {
   // @desc		Add a Transaction
   // @route		DELETE /api/v1/envelopes/:id/transactions
+addEnvelopeTransaction = async (request, response) => {
+  const id = parseInt(request.params.id)
+  const { title, budget } = request.query
+  const date = new Date()
+
+  const envelopeQuery = ''
+  const transactionQuery = ''
+  const updateEnvelopeQuery = ''
+
+  try {
+    
+  }
+  catch (error) {
+    return response.status(500).send({
+			error: error.message
+		})
+  }
 };
 
 //Get Envelope Transaction Query
 getEnvelopeTransactions = async (request, response) => {
-  // @desc		Get Envelope transactions
-  // @route		GET /api/v1/envelope/:id/transactions
+  const id = parseInt(request.params.id)
+  const query = 'SELECT * FROM transactions WHERE envelope_id = $1'
+
+  try {  
+    await db.query(query, [id], (error, results) => {
+      if (results.rowCount < 1) {
+        return response.status(404).send({
+          status: 'Failure',
+          message: "No envelope information found",
+          })
+      } else {
+      response.status(200).send({
+        status: 'Success',
+        message: 'Envelope Transaction Information retrieved',
+        data: results.rows[0],
+        })
+      }
+    })
+  }
+  catch (error) {
+    return response.status(500).send({
+			error: error.message
+	  })
+  }
 };
  
 //Export Queries
