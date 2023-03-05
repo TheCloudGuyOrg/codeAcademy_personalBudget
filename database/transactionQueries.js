@@ -64,21 +64,22 @@ const getTransactionById = async (request, response) => {
 //Update Transaction Path: PUT /api/v1/transactions/:id
     //Update Envelope Budget Amount when executed. 
 const updateTransaction = async (request, response) => { 
-  const id = parseInt(request.params.id)
+  const transactionId = parseInt(request.params.id)
   const { date, payment_amount, payment_reciepient, envelope_id } = request.query
-  const query = 'UPDATE transactions SET date = $1, payment_amount = $2, payment_reciepient = $3, envelope_id = $4 WHERE id = $5'
+  
+  const transactionQuery = 'UPDATE transactions SET date = $1, payment_amount = $2, payment_reciepient = $3, envelope_id = $4 WHERE id = $5'
 
   try {
-    await db.query(query, [date, payment_amount, payment_reciepient, envelope_id, id], (error, results) => {
+    await db.query(transactionQuery, [date, payment_amount, payment_reciepient, envelope_id, transactionId], (error, results) => {
       if (error) {
         return response.status(400).send({
           status: 'Failure',
-          message: `Could not update transaction with ID ${id}`,
+          message: `Could not update transaction with ID ${transactionId}`,
           })
         } else {
         response.status(200).send({
           status: 'Success',
-          message: `Transaction with ID ${id} updated`,
+          message: `Transaction with ID ${transactionId} updated`,
           data: results.rows[0],
           })
         }
@@ -87,9 +88,10 @@ const updateTransaction = async (request, response) => {
   catch (error) {
     return response.status(500).send({
 		error: error.message
-	})
+	  })
   }
-};
+}
+
 
 //Delete Transation Path: DELETE /api/v1/transactions/:id
     //Update Envelope Budget Amount when executed. 
