@@ -53,8 +53,7 @@ const getEnvelopesById = async (request, response) => {
   }
 };
 
-//Add Envelopes Query Path POST /api/v1/envelopes
-    //Update Envelope Budget Amount when executed. 
+//Add Envelopes Query Path POST /api/v1/envelopes 
 const addEnvelope = async (request, response) => {
   const { id, title, budget } = request.query
   const query = 'INSERT INTO envelopes (id, title, budget) VALUES ($1, $2, $3) RETURNING *'
