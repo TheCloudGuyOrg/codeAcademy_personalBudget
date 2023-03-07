@@ -92,36 +92,35 @@ const updateTransaction = async (request, response) => {
   }
 }
 
-
 //Delete Transation Path: DELETE /api/v1/transactions/:id
     //Update Envelope Budget Amount when executed. 
-const deleteTransaction = async (request, response) => {
-  const id = parseInt(request.params.id)
-  const query = 'DELETE FROM transactions WHERE id = $1'
-
-  try {
-    await db.query(query, [id], (error, results) => {
-      if (results.rowCount < 1) {
-        return response.status(400).send({
-          status: 'Failure',
-          message: "Record not found",
-        })
-      } else {
-      response.status(200).send({
-        status: 'Success',
-        message: `Transaction deleted with ID: ${id}`,
-        data: results.rows[0],
+    const deleteTransaction = async (request, response) => {
+      const id = parseInt(request.params.id)
+      const deleteTransaction = 'DELETE FROM transactions WHERE id = $1'
+    
+      try {
+        await db.query(deleteTransaction, [id], (error, results) => {
+          if (results.rowCount < 1) {
+            return response.status(400).send({
+              status: 'Failure',
+              message: "Record not found",
+            })
+          } else {
+          response.status(200).send({
+            status: 'Success',
+            message: `Transaction deleted with ID: ${id}`,
+            data: results.rows[0],
+            })
+          }
         })
       }
-    })
-  }
-  catch (error) {
-    return response.status(500).send({
-		error: error.message
-	  })
-  }
-};
-
+      catch (error) {
+        return response.status(500).send({
+            error: error.message
+          })
+      }
+    };
+    
 //Export Queries
 module.exports = {
     getTransactions,
