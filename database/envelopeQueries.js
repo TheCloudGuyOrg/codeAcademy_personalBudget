@@ -204,9 +204,3 @@ module.exports = {
   addEnvelopeTransaction,
   getEnvelopeTransactions
 };
-
-
-
-// Fix POST, UPDATE, DELETE transaction API's to update envelope budget amounts
-// Write Test Suite with Mocha
-
