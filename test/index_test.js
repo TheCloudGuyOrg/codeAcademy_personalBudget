@@ -52,7 +52,13 @@ describe('Test Delete Envelopes', () => {
 
 //Test addEnvelopeTransaction
 describe('Test Add Envelopes by Transaction', () => {
-    it('ValidateaddEnvelopeTransaction', () => {
+    it('Validate addEnvelopeTransaction', () => {
+        // Setup
+        // Exercise
+        // Verify
+        // Teardown
+    });
+    it('Validate Envelope Budget Updated', () => {
         // Setup
         // Exercise
         // Verify
@@ -98,11 +104,23 @@ describe('Test Update Transactions', () => {
         // Verify
         // Teardown
     });
+    it('Validate Envelope Budget Updated', () => {
+        // Setup
+        // Exercise
+        // Verify
+        // Teardown
+    });
 });
 
 //Test deleteTransactions
 describe('Test Delete Transactions', () => {
     it('Validate deleteTransaction', () => {
+        // Setup
+        // Exercise
+        // Verify
+        // Teardown
+    });
+    it('Validate Envelope Budget Updated', () => {
         // Setup
         // Exercise
         // Verify
