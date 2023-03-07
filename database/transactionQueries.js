@@ -3,10 +3,9 @@ const db = require('./dbconnection.js');
 
 //Get Transactions Query: Path: GET /api/v1/transactions
 const getTransactions = async (request, response) => {
-
+  const query = 'SELECT * FROM transactions ORDER BY id ASC'
+  
   try {
-    const query = 'SELECT * FROM transactions ORDER BY id ASC'
-
       await db.query(query, (error, results) => {
         if (results.rowCount < 1) {
           return response.status(404).send({
@@ -61,7 +60,6 @@ const getTransactionById = async (request, response) => {
 const updateTransaction = async (request, response) => { 
   const transactionId = parseInt(request.params.id)
   const { date, payment_amount, payment_reciepient, envelope_id } = request.query
-  
   const transactionQuery = 'UPDATE transactions SET date = $1, payment_amount = $2, payment_reciepient = $3, envelope_id = $4 WHERE id = $5'
 
   try {
