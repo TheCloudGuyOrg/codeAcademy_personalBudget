@@ -1,4 +1,24 @@
+//Import Assert
 const assert = require('assert')
+
+//Import Envelope Queries
+const {
+    getEnvelopes,
+    getEnvelopesById,
+    addEnvelope,
+    updateEnvelope,
+    deleteEnvelope,
+    addEnvelopeTransaction,
+    getEnvelopeTransactions
+} = require('../database/envelopeQueries.js');
+
+//Import Transaction Queries
+const {
+	getTransactions,
+	getTransactionById,
+	deleteTransaction,
+	updateTransaction
+} = require('../database/transactionQueries.js');
 
 //Test getEnvelopes
 describe('Test Get Envelopes', () => {
@@ -6,7 +26,6 @@ describe('Test Get Envelopes', () => {
         // Setup
         // Exercise
         // Verify
-        // Teardown
     });
 });
 
@@ -16,7 +35,6 @@ describe('Test Get Envelopes by Id', () => {
         // Setup
         // Exercise
         // Verify
-        // Teardown
     });
 });
 
@@ -72,7 +90,6 @@ describe('Test Get Envelopes by Transaction', () => {
         // Setup
         // Exercise
         // Verify
-        // Teardown
     });
 });
 
@@ -82,7 +99,6 @@ describe('Test Get Transactions', () => {
         // Setup
         // Exercise
         // Verify
-        // Teardown
     });
 });
 
@@ -92,7 +108,6 @@ describe('Test Get Transactions by Id', () => {
         // Setup
         // Exercise
         // Verify
-        // Teardown
     });
 });
 
