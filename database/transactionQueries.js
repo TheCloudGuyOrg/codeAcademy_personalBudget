@@ -6,7 +6,7 @@ const getTransactions = async (request, response) => {
 
   try {
     const query = 'SELECT * FROM transactions ORDER BY id ASC'
-    try {
+
       await db.query(query, (error, results) => {
         if (results.rowCount < 1) {
           return response.status(404).send({
@@ -17,20 +17,14 @@ const getTransactions = async (request, response) => {
           status: 'Success',
           message: 'Transaction Information retrieved',
           data: results.rows,
-          })
-        }
-      })
-    }
-    catch (error) {
-      return response.status(500).send({
-              error: error.message
-          })
-    }
+        })
+      }
+    })
   }
   catch (error) {
     return response.status(500).send({
 		error: error.message
-	})
+	  })
   }
 };
 
@@ -38,6 +32,7 @@ const getTransactions = async (request, response) => {
 const getTransactionById = async (request, response) => {
     const id = parseInt(request.params.id)
     const query = 'SELECT * FROM transactions WHERE id = $1'
+    
     try {  
       await db.query(query, [id], (error, results) => {
         if (results.rowCount < 1) {
@@ -120,7 +115,7 @@ const updateTransaction = async (request, response) => {
           })
       }
     };
-    
+
 //Export Queries
 module.exports = {
     getTransactions,
