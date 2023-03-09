@@ -3,309 +3,526 @@ const request = require('supertest')
 const assert = require('assert');
 const app = require('../server.js')
 
-//Test addEnvelopes
-describe('Test Add Envelopes', () => {
-    it('Validate addEnvelope Status Code', async () => {
-        // Setup
-        const expected = 200
-
-        const id = 9999
-        const title = 'test'
-        const budget = 999
-
-        // Exercise
-        const response = await request(app)
-            .post('/api/v1/envelopes')
-            .send({id, title, budget});
-
-        // Verify
-        assert.equal(response.status, expected)
-
-        // Teardown
-    })
-
-    it('Validate addEnvelope Content', async () => {
-        // Setup
-        // Exercise
-        const response = await request(app)
-           .post('/api/v1/envelopes')
-        // Verify
-        //console.log(response.text)
-        // Teardown
-    })
-});
-
-
-//Test updateEnvelopes
-describe('Test Update Envelopes', () => {
-    it('Validate updateEnvelope Status Code', async () => {
-        // Setup
-        const expected = 200
-
-        const id = 9999
-        const title = 'test'
-        const budget = 999
-
-        // Exercise
-        const response = await request(app)
-            .put('/api/v1/envelopes/9999')
-            .type('form')
-            .send({id, title, budget})
-
-        // Verify
-
-        assert.equal(response.status, expected)
-        // Teardown
-    })
-
-    it('Validate updateEnvelope Content', async () => {
-        // Setup
-        // Exercise
-        const response = await request(app)
-            .put('/api/v1/envelopes/9999')
-        // Verify
-       // console.log(response.text)
-        // Teardown
-    })
-});
-
-//Test getEnvelopes
-describe('Test Get Envelopes', () => {
-    it('Validate getEnvelopes Status Code', async () => {
-        // Setup
-        const expected = 200
-        // Exercise
-        const response = await request(app)
-            .get('/api/v1/envelopes')
-        // Verify
-        assert.equal(response.status, expected)
-    })
-
-    it('Validate getEnvelopes Content', async () => {
-        // Setup
-        // Exercise
-        const response = await request(app)
-            .get('/api/v1/envelopes')
-        // Verify
-        //console.log(response.text)
-        //assert.include('status":"Success')
-    })
-});
-
-//Test getEnvelopes by Id
-describe('Test Get Envelopes by Id', () => {
-    it('Validate getEnvelopesById Status Code', async () => {
-        // Setup
-        const expected = 200
-        // Exercise
-        const response = await request(app)
-            .get('/api/v1/envelopes/9999')
-        // Verify
-        assert.equal(response.status, expected)
-    })
-
-    it('Validate getEnvelopesById Content', async () => {
-        // Setup
-        // Exercise
-        const response = await request(app)
-            .get('/api/v1/envelopes/9999')
-        // Verify
-       // console.log(response.text)
-    })
-});
-
-//Test deleteEnvelopes
-describe('Test Delete Envelopes', () => {
-    it('Validate deleteEnvelop Status Code', async () => {
-        // Setup
-        const expected = 200
-        // Exercise
-        const response = await request(app)
-            .delete('/api/v1/envelopes/9999')
-        // Verify
-        assert.equal(response.status, expected)
-        // Teardown
-    })
-
-    it('Validate deleteEnvelope Content', async () => {
-        // Setup
-        // Exercise
-        const response = await request(app)
-            .delete('/api/v1/envelopes/9999')
-        // Verify
-        //console.log(response.text)
-        // Teardown
-    })
-});
-
-
-//Test addEnvelopeTransaction
-describe('Test Add Envelopes by Transaction', () => {
-    it('Validate addEnvelopeTransaction Status Code', async () => {
+//Test: GET /api/v1/envelopes
+describe('GET /api/v1/envelopes', () => {
+    it('status_code: 200', async () => {
         
         // Setup
+        const excerciseUrl = '/api/v1/envelopes'
         const expected = 200
-   
-        date = '2023-03-01'
-        payment_amount = 9999
-        payment_reciepient = 'test'
-        envelope_id = 1
+
+        // Exercise
+        const response = await request(app)
+            .get(excerciseUrl)
+
+        const result = response.status
+
+        // Verify
+        assert.equal(result, expected)
+    })
+
+    it('Status: Success', async () => {
+        
+        // Setup
+        const excerciseUrl = '/api/v1/envelopes'
+        const expected = 'Success'
+
+        // Exercise
+        const response = await request(app)
+            .get(excerciseUrl)
+           
+        const result = response._body.status
+
+        // Verify
+        assert.equal(result, expected)
+    })
+});
+
+//Test: GET /api/v1/envelopes/:id
+describe('GET /api/v1/envelopes/:id', () => {
+    it('status_code: 200', async () => {
+        
+        // Setup
+        const excerciseUrl = '/api/v1/envelopes/9999'
+        const setupUrl = '/api/v1/envelopes?id=9999&title=test&budget=999'
+        const teardownUrl = '/api/v1/envelopes/9999'
+        const expected = 200
+
+        await request(app)
+            .post(setupUrl)
+
+        // Exercise
+        const response = await request(app)
+            .get(excerciseUrl)
+
+        const result = response.status
+
+        // Verify
+        assert.equal(result, expected)
+
+        // Teardown
+        await request(app)
+            .delete(teardownUrl)
+    })
+
+    it('Status: Success', async () => {
+        
+        // Setup
+        const excerciseUrl = '/api/v1/envelopes/9999'
+        const setupUrl = '/api/v1/envelopes?id=9999&title=test&budget=999'
+        const teardownUrl = '/api/v1/envelopes/9999'
+        const expected = 'Success'
+
+        await request(app)
+            .post(setupUrl)
+
+        // Exercise
+        const response = await request(app)
+            .get(excerciseUrl)
+
+        const result = response._body.status
+
+        // Verify
+        assert.equal(result, expected)
+
+        // Teardown
+        await request(app)
+            .delete(teardownUrl)
+    })
+});
+
+//Test: POST /api/v1/envelopes
+describe('POST /api/v1/envelopes', () => {
+    it('status_code: 201', async () => {
+        
+        // Setup
+        const excerciseUrl = '/api/v1/envelopes?id=9999&title=test&budget=999'
+        const teardownUrl = '/api/v1/envelopes/9999'
+        const expected = 201
+
+        // Exercise
+        const response = await request(app)
+            .post(excerciseUrl)
+
+        const result = response.status
+
+        // Verify
+        assert.equal(result, expected)
+
+        // Teardown
+       await request(app)
+            .delete(teardownUrl)
+    })
+
+    it('Status: Success', async () => {
+        
+        // Setup
+        const excerciseUrl = '/api/v1/envelopes?id=9999&title=test&budget=999'
+        const teardownUrl = '/api/v1/envelopes/9999'
+        const expected = 'Success'
+
+        // Exercise
+        const response = await request(app)
+           .post(excerciseUrl)
+
+        const result = response._body.status
+
+        // Verify
+        assert.equal(result, expected)
+
+        // Teardown
+        await request(app)
+            .delete(teardownUrl)
+    })
+});
+
+//Test: PUT /api/v1/envelopes
+describe('PUT /api/v1/envelopes/:id', () => {
+    it('status_code 200', async () => {
+       
+        // Setup
+        const excerciseUrl = '/api/v1/envelopes/9999?id=9999&budget=111&title=Test'
+        const setupUrl = '/api/v1/envelopes?id=9999&title=test&budget=999'
+        const teardownUrl = '/api/v1/envelopes/9999'
+        const expected = 200
+
+        await request(app)
+            .post(setupUrl)
+
+        // Exercise
+        const response = await request(app)
+            .put(excerciseUrl)
+
+        const result = response.status
+
+        // Verify
+        assert.equal(result, expected)
+
+        // Teardown
+        await request(app)
+            .delete(teardownUrl)
+    })
+    
+    it('Status: Success', async () => {
+        
+        // Setup
+        const excerciseUrl = '/api/v1/envelopes/9999?id=9999&budget=111&title=Test'
+        const setupUrl = '/api/v1/envelopes?id=9999&title=test&budget=999'
+        const teardownUrl = '/api/v1/envelopes/9999'
+        const expected = 'Success'
+
+        await request(app)
+            .post(setupUrl)
+
+        // Exercise
+        const response = await request(app)
+            .put(excerciseUrl)
+
+        const result = response._body.status
+
+        // Verify
+        assert.equal(result, expected)
+
+        // Teardown
+        await request(app)
+            .delete(teardownUrl)
+    })
+});
+
+//Test: DELETE /api/v1/envelopes/:id
+describe('DELETE /api/v1/envelopes/:id', () => {
+    it('status_code 200', async () => {
+       
+        // Setup
+        const excerciseUrl = '/api/v1/envelopes/9999'
+        const setupUrl = '/api/v1/envelopes?id=9999&title=test&budget=999'
+        const expected = 200
+
+        await request(app)
+            .post(setupUrl)
+
+        // Exercise
+        const response = await request(app)
+            .delete(excerciseUrl)
+
+        const result = response.status
+
+        // Verify
+        assert.equal(result, expected)
+    })
+    
+    it('Status: Success', async () => {
+        
+        // Setup
+        const excerciseUrl = '/api/v1/envelopes/9999'
+        const setupUrl = '/api/v1/envelopes?id=9999&title=test&budget=999'
+        const expected = 'Success'
+
+        await request(app)
+            .post(setupUrl)
+
+        // Exercise
+        const response = await request(app)
+            .delete(excerciseUrl)
+
+        const result = response._body.status
+
+        // Verify
+        assert.equal(result, expected)
+    })
+});
+
+//Test: GET /api/v1/transactions
+describe('GET /api/v1/transactions', () => {
+    it('status_code: 200', async () => {
+        
+        // Setup
+        const excerciseUrl = '/api/v1/transactions'
+        const expected = 200
+
+        // Exercise
+        const response = await request(app)
+            .get(excerciseUrl)
+
+        const result = response.status
+
+        // Verify
+        assert.equal(result, expected)
+    })
+
+    it('Status: Success', async () => {
+        
+        // Setup
+        const excerciseUrl = '/api/v1/transactions'
+        const expected = 'Success'
+
+        // Exercise
+        const response = await request(app)
+            .get(excerciseUrl)
+           
+        const result = response._body.status
+
+        // Verify
+        assert.equal(result, expected)
+    })
+});
+
+//Test: GET /api/v1/transactions/:id
+describe('GET /api/v1/transactions/:id', () => {
+    it('status_code: 200', async () => {
+        
+        // Setup
+        const excerciseUrl = '/api/v1/envelopes/9999'
+        const setupEnvelopeUrl = '/api/v1/envelopes?id=9999&title=test&budget=999'
+        const setupTransactionUrl = '/api/v1/envelopes/9999/transactions?envelope_id=9999&payment_amount=999&payment_reciepient=Test&date=2099-12-31'
+        const teardownEnvelopeUrl = '/api/v1/envelopes/9999'
+        const teardownTransactionUrl = '/api/v1/transactions/9999'
+        const expected = 200
+
+        await request(app)
+            .post(setupEnvelopeUrl)
+
+        await request(app)
+            .post(setupTransactionUrl)
+
+        // Exercise
+        const response = await request(app)
+           .get(excerciseUrl)
+
+        const result = response.status
+
+        // Verify
+        assert.equal(result, expected)
+
+        // Teardown
+        await request(app)
+           .delete(teardownTransactionUrl)
+
+        await request(app)
+            .delete(teardownEnvelopeUrl)
+    })
+
+    it('Status: Success', async () => {
+        
+        // Setup
+        const excerciseUrl = '/api/v1/envelopes/9999'
+        const setupEnvelopeUrl = '/api/v1/envelopes?id=9999&title=test&budget=999'
+        const setupTransactionUrl = '/api/v1/envelopes/9999/transactions?envelope_id=9999&payment_amount=999&payment_reciepient=Test&date=2099-12-31'
+        const teardownEnvelopeUrl = '/api/v1/envelopes/9999'
+        const teardownTransactionUrl = '/api/v1/transactions/9999'
+        const expected = 'Success'
+
+        await request(app)
+            .post(setupEnvelopeUrl)
+
+        await request(app)
+            .post(setupTransactionUrl)
+
+        // Exercise
+        const response = await request(app)
+           .get(excerciseUrl)
+
+        const result = response._body.status
+
+        // Verify
+        assert.equal(result, expected)
+
+        // Teardown
+        await request(app)
+           .delete(teardownTransactionUrl)
+
+        await request(app)
+            .delete(teardownEnvelopeUrl)
+    })
+});
+
+//Test: POST /api/v1/envelopes/:id/transactions
+describe('POST /api/v1/envelopes/:id/transactions', () => {
+    it('status_code: 201', async () => {
+        
+        // Setup
+        const excerciseUrl = '/api/v1/envelopes/9999/transactions?envelope_id=9999&payment_amount=999&payment_reciepient=Test&date=2099-12-31'
+        const setupEnvelopeUrl = '/api/v1/envelopes?id=9999&title=test&budget=999'
+        const teardownEnvelopeUrl = '/api/v1/envelopes/9999'
+        const teardownTransactionUrl = '/api/v1/transactions/9999'
+        const expected = 201
+
+        await request(app)
+            .post(setupEnvelopeUrl)
     
         // Exercise
         const response = await request(app)
-            .post('/api/v1/envelopes/9999/transactions')
-            .type('form')
-            .send({date, payment_amount, payment_reciepient, envelope_id})
+            .post(excerciseUrl)
         
+        const result = response.status
+
         // Verify
-        assert.equal(response.status, expected)
+        assert.equal(result, expected)
 
         // Teardown
+        await request(app)
+            .delete(teardownTransactionUrl)
+
+        await request(app)
+            .delete(teardownEnvelopeUrl)
     })
 
-    it('Validate addEnvelopeTransaction Content', async () => {
+    it('Status: Success', async () => {
+        
         // Setup
-        // Exercise
-        //const response = await request(app)
-           // .post('/api/v1/envelopes/1')
-        // Verify
-        //console.log(response.text)
-        // Teardown
-    })
+        const excerciseUrl = '/api/v1/envelopes/9999/transactions?envelope_id=9999&payment_amount=999&payment_reciepient=Test&date=2099-12-31'
+        const setupEnvelopeUrl = '/api/v1/envelopes?id=9999&title=test&budget=999'
+        const teardownEnvelopeUrl = '/api/v1/envelopes/9999'
+        const teardownTransactionUrl = '/api/v1/transactions/9999'
+        const expected = 'Success'
 
-    it('Validate Envelope Budget Updated', async () => {
-        // Setup
+        await request(app)
+            .post(setupEnvelopeUrl)
+    
         // Exercise
+        const response = await request(app)
+            .post(excerciseUrl)
+        
+        const result = response._body.status
+
         // Verify
+        assert.equal(result, expected)
+
         // Teardown
+        await request(app)
+            .delete(teardownTransactionUrl)
+
+        await request(app)
+            .delete(teardownEnvelopeUrl)
     })
 });
 
-//Test getEnvelopeTransaction
-describe('Test Get Envelopes by Transaction', () => {
-    it('Validate getEnvelopeTransactions Status Code', async () => {
+//Test: PUT /api/v1/transactions/
+describe('PUT /api/v1/transactions/', () => {
+    it('status_code: 200', async () => {
+        
         // Setup
+        const excerciseUrl = '/api/v1/transactions/9999?id=9999&envelope_id=9999&payment_amount=111&payment_reciepient=Test&date=2099-12-31'
+        const setupEnvelopeUrl = '/api/v1/envelopes?id=9999&title=test&budget=999'
+        const setupTransactionUrl = '/api/v1/envelopes/9999/transactions?envelope_id=9999&payment_amount=999&payment_reciepient=Test&date=2099-12-31'
+        const teardownEnvelopeUrl = '/api/v1/envelopes/9999'
+        const teardownTransactionUrl = '/api/v1/transactions/9999'
         const expected = 200
+
+        await request(app)
+            .post(setupEnvelopeUrl)
+
+        await request(app)
+            .post(setupTransactionUrl)
+    
         // Exercise
         const response = await request(app)
-            .get('/api/v1/envelopes/9999/transactions')
+            .put(excerciseUrl)
+        
+        const result = response.status
+
         // Verify
-        assert.equal(response.status, expected)
+        assert.equal(result, expected)
+
+        // Teardown
+        await request(app)
+            .delete(teardownTransactionUrl)
+
+        await request(app)
+            .delete(teardownEnvelopeUrl)
     })
 
-    it('Validate getEnvelopeTransactions Content', async () => {
+    it('Status: Success', async () => {
+        
         // Setup
+        const excerciseUrl = '/api/v1/transactions/9999?id=9999&envelope_id=9999&payment_amount=111&payment_reciepient=Test&date=2099-12-31'
+        const setupEnvelopeUrl = '/api/v1/envelopes?id=9999&title=test&budget=999'
+        const setupTransactionUrl = '/api/v1/envelopes/9999/transactions?envelope_id=9999&payment_amount=999&payment_reciepient=Test&date=2099-12-31'
+        const teardownEnvelopeUrl = '/api/v1/envelopes/9999'
+        const teardownTransactionUrl = '/api/v1/transactions/9999'
+        const expected = 'Success'
+
+        await request(app)
+            .post(setupEnvelopeUrl)
+
+        await request(app)
+            .post(setupTransactionUrl)
+    
         // Exercise
         const response = await request(app)
-            .get('/api/v1/envelopes/9999/transactions')
+            .put(excerciseUrl)
+        
+        const result = response._body.status
+
         // Verify
-       // console.log(response.test)
+        assert.equal(result, expected)
+
+        // Teardown
+        await request(app)
+            .delete(teardownTransactionUrl)
+
+        await request(app)
+            .delete(teardownEnvelopeUrl)
     })
 });
 
-//Test getTransactions
-describe('Test Get Transactions', () => {
-    it('Validate getTransactions Status Code', async () => {
+//Test: DELETE /api/v1/transactions/9999
+describe('DELETE /api/v1/transactions/9999', () => {
+    it('status_code: 200', async () => {
+        
         // Setup
+        const excerciseUrl = '/api/v1/transactions/9999'
+        const setupEnvelopeUrl = '/api/v1/envelopes?id=9999&title=test&budget=999'
+        const setupTransactionUrl = '/api/v1/envelopes/9999/transactions?envelope_id=9999&payment_amount=999&payment_reciepient=Test&date=2099-12-31'
+        const teardownEnvelopeUrl = '/api/v1/envelopes/9999'
         const expected = 200
-        // Exercise
-        const response = await request(app)
-            .get('/api/v1/transactions')
-        // Verify
-        assert.equal(response.status, expected)
-    })
 
-    it('Validate getTransactions Content', async () => {
-        // Setup
-        // Exercise
-        const response = await request(app)
-            .get('/api/v1/transactions')
-        // Verify
-       // console.log(response.text)
-    })
-});
+        await request(app)
+            .post(setupEnvelopeUrl)
 
-//Test getTransactions by Id
-describe('Test Get Transactions by Id', () => {
-    it('Validate getTransactionById Status Code', async () => {
-        // Setup
-        const expected = 200
+        await request(app)
+            .post(setupTransactionUrl)
+    
         // Exercise
         const response = await request(app)
-            .get('/api/v1/transactions/9999')
-        // Verify
-        assert.equal(response.status, expected)
-    })
+            .delete(excerciseUrl)
+        
+        const result = response.status
 
-    it('Validate getTransactionById Content', async () => {
-        // Setup
-        // Exercise
-        const response = await request(app)
-            .get('/api/v1/transactions/9999')
         // Verify
-       // console.log(response.text)
-    })
-});
+        assert.equal(result, expected)
 
-//Test updateTransactions
-describe('Test Update Transactions', () => {
-    it('Validate updateTransaction Status Code', async () => {
-        // Setup
-        const expected = 200
-        // Exercise
-        const response = await request(app)
-            .put('/api/v1/envelopes/9999')
-        // Verify
-        assert.equal(response.status, expected)
         // Teardown
+        await request(app)
+            .delete(teardownEnvelopeUrl)
     })
 
-    it('Validate updateTransaction Content', async () => {
-        // Setup
+    it('Status: Success', async () => {
+        
+        //Setup
+        const excerciseUrl = '/api/v1/transactions/9999'
+        const setupEnvelopeUrl = '/api/v1/envelopes?id=9999&title=test&budget=999'
+        const setupTransactionUrl = '/api/v1/envelopes/9999/transactions?envelope_id=9999&payment_amount=999&payment_reciepient=Test&date=2099-12-31'
+        const teardownEnvelopeUrl = '/api/v1/envelopes/9999'
+        const expected = 'Success'
+
+        await request(app)
+            .post(setupEnvelopeUrl)
+
+        await request(app)
+            .post(setupTransactionUrl)
+    
         // Exercise
         const response = await request(app)
-            .put('/api/v1/envelopes/9999')
-        // Verify
-      //  console.log(response.text)
-        // Teardown
-    })
+            .delete(excerciseUrl)
+        
+        const result = response._body.status
 
-    it('Validate Envelope Budget Updated', async () => {
-        // Setup
-        // Exercise
         // Verify
-        // Teardown
-    })
-});
+        assert.equal(result, expected)
 
-//Test deleteTransactions
-describe('Test Delete Transactions', () => {
-    it('Validate deleteTransaction Status Code', async () => {
-        // Setup
-        const expected = 200
-        // Exercise
-        const response = await request(app)
-            .delete('/api/v1/envelopes/9999')
-        // Verify
-        console.log(response)
-        assert.equal(response.status, expected)
         // Teardown
-    })
-
-    it('Validate deleteTransaction Content', async () => {
-        // Setup
-        // Exercise
-        const response = await request(app)
-            .delete('/api/v1/envelopes/9999')
-        // Verify
-       // console.log(response.text)
-        // Teardown
-    })
-
-    it('Validate Envelope Budget Updated', async () => {
-        // Setup
-        // Exercise
-        // Verify
-        // Teardown
+        await request(app)
+            .delete(teardownEnvelopeUrl)
     })
 });

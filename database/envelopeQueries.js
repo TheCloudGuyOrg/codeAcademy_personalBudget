@@ -149,7 +149,6 @@ const addEnvelopeTransaction = async (request, response) => {
   
   try {
     await db.query(query, [id, date, payment_amount, payment_reciepient, envelope_id], (error, results) => {
-      console.log(id, date, payment_amount, payment_reciepient, envelope_id )
       if (error) {
         return response.status(400).send({
           status: 'Failure',
