@@ -133,7 +133,7 @@ describe('POST /api/v1/envelopes', () => {
         // Teardown
         await request(app)
             .delete(teardownUrl)
-    })
+    })   
 });
 
 //Test: PUT /api/v1/envelopes
