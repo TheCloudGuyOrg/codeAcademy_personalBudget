@@ -13,7 +13,7 @@ const {
     getEnvelopeTransactions
 } = require('../database/envelopeQueries.js');
 
-//API Routes
+//Envelope API Routes
 api.get('/', getEnvelopes);
 api.get('/:id', getEnvelopesById);
 api.post("/", addEnvelope);

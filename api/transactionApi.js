@@ -10,7 +10,7 @@ const {
 	updateTransaction
 } = require('../database/transactionQueries.js');
 
-//API Routes
+//Transaction API Routes
 api.get('/', getTransactions);
 api.get('/:id', getTransactionById);
 api.delete('/:id', deleteTransaction);

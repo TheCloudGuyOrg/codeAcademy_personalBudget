@@ -1,13 +1,16 @@
+//Database Connection
 const { Client, Pool } = require('pg');
 const {DB_USER, PORT, DB_HOST, DB_DATABASE} = require('./dbconfig');
 const connectionString = `postgresql://${DB_USER}@${DB_HOST}:${PORT}/${DB_DATABASE}`;
 const pool = new Pool ({connectionString});
 
+//Export DB Connection
 module.exports = {
   query: (text, params, callback) => {
     return pool.query(text, params, callback)
   },
 }
+
 /*
 // Debug DB Queries
 module.exports = {
