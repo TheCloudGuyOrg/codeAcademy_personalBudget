@@ -1,6 +1,6 @@
 //Import Modules
 const request = require('supertest')
-const assert = require('assert');
+const assert = require('assert')
 const app = require('../server.js')
 
 //Test: GET /api/v1/envelopes
@@ -526,3 +526,5 @@ describe('DELETE /api/v1/transactions/9999', () => {
             .delete(teardownEnvelopeUrl)
     })
 });
+
+// Add Spies https://sinonjs.org/releases/latest/spies/
